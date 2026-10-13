@@ -1,0 +1,263 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: white;
+  color: black;
+}
+
+body {
+  font-family: "PingFang HK", "PingFang TC", sans-serif;
+}
+
+
+
+header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  height: 100px;
+  padding: 36px 50px;
+  background: white;
+}
+
+header a {
+  color: black;
+  text-decoration: none;
+  font-size: 22px;
+}
+
+
+
+#gallery {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px);
+
+  display: flex;
+  align-items: stretch;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+#gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.sequence {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+
+
+.photo-card {
+  flex: 0 0 auto;
+  width: 28vw;
+  margin: 0 30px;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+
+
+.preview {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preview.visible {
+  visibility: visible;
+}
+
+.preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.preview.active::before {
+  opacity: 1;
+}
+
+.preview.dark::before {
+  background: black;
+}
+
+.preview-image {
+  position: absolute;
+  display: block;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  transform-origin: top left;
+
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+
+
+.preview-writing {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  padding: 60px 6vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  color: black;
+  opacity: 0;
+  transform: translateY(20px);
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.preview.active.has-text .preview-writing {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.preview.dark .preview-writing {
+  color: white;
+}
+
+.preview-heading {
+  margin: 0 0 28px;
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.preview-text {
+  margin: 0;
+  font-family: "PingFang HK", "PingFang TC", sans-serif;
+  font-size: 18px;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.preview-credit {
+  margin: 24px 0 0;
+  font-family: "Adobe Clean UX", "Adobe Clean", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.preview-quote {
+  position: static;
+  margin: 28px 0 0;
+  font-family: Didot, "Bodoni MT", "Times New Roman", serif;
+  font-size: 30px;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+.preview-writing > [hidden] {
+  display: none;
+}
+
+
+
+.preview.heading-only .preview-writing {
+  top: 35px;
+  bottom: auto;
+  left: 5%;
+  right: 5%;
+  padding: 0;
+  text-align: center;
+}
+
+.preview.heading-only .preview-heading {
+  margin: 0;
+}
+
+
+
+.photo:focus-visible,
+header a:focus-visible {
+  outline: 1px solid black;
+  outline-offset: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview::before,
+  .preview-image,
+  .preview-writing {
+    transition: none;
+  }
+}
+
+.preview-image {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.preview::before {
+  transition: opacity 0.4s ease;
+}
+
+.preview-writing {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Start immediately and expand quickly */
+.image-preview img,
+.preview-image {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.image-preview::before,
+.preview::before {
+  transition: opacity 0.18s ease;
+}
+
+.preview-writing {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-preview img,
+  .preview-image,
+  .image-preview::before,
+  .preview::before,
+  .preview-writing {
+    transition: none;
+  }
+}
+.preview-text {
+  white-space: pre-line;
+}
